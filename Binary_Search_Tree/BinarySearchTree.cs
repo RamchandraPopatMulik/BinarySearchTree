@@ -9,61 +9,51 @@ namespace Binary_Search_Tree
 {
     public class BinarySearchTree<T> where T : IComparable<T>
     {
-        public T NodeData { get; set; }
-        public BinarySearchTree<T> LeftTree { get; set; }
-        public BinarySearchTree<T> RightTree { get; set; }
+            public Node<T> Root;
+            private int size = 0;
+            public void Add(T data)
+            {
+                Node<T> parent = null, current = Root;
 
-        public BinarySearchTree(T nodeData)
-        {
-            this.NodeData = nodeData;
-            this.LeftTree = null;
-            this.RightTree = null;
-        }
-        int leftCount = 0;
-        int rightCount = 0;
-        bool result = false;
-        public void Add(T items)
-        {
-            T currentNodeValue = this.NodeData;
-            if ((currentNodeValue.CompareTo(items)) > 0)
-            {
-                if (this.LeftTree == null)
+                while (current != null)
                 {
-                    this.LeftTree = new BinarySearchTree<T>(items); ;
+                    parent = current;
+                    if (current.Data.CompareTo(data) >= 0)
+                        current = current.leftNode;
+                    else if (data.CompareTo(current.Data) >= 0)
+                        current = current.rightNode;
+                    else
+                    {
+                        Console.WriteLine($"{data} is already present in Binary Tree");
+                    }
                 }
+
+                Node<T> newNode = new Node<T>(data);
+
+                if (this.Root == null)
+                    this.Root = newNode;
                 else
                 {
-                    this.LeftTree.Add(items);
-                    return;
+                    if (parent.Data.CompareTo(data) >= 0)
+                        parent.leftNode = newNode;
+                    else
+                        parent.rightNode = newNode;
                 }
             }
-            else
+            public void DisplayInorder(Node<T> parent)
             {
-                if (this.RightTree == null)
+                if (parent != null)
                 {
-                    this.RightTree = new BinarySearchTree<T>(items);
-                }
-                else
-                {
-                    this.RightTree.Add(items);
-                    return;
+                    size++;
+                    DisplayInorder(parent.leftNode);
+                    Console.Write(parent.Data + " ");
+                    DisplayInorder(parent.rightNode);
                 }
             }
-            Console.WriteLine($"Added : {items}");
-        }
-        public void Display()
-        {
-            if (this.LeftTree != null)
+            public void Size()
             {
-                this.leftCount++;
-                this.LeftTree.Display();
-            }
-            Console.WriteLine(this.NodeData.ToString());
-            if (this.RightTree != null)
-            {
-                this.rightCount++;
-                this.RightTree.Display();
+                Console.Write($"\nThe Size of Binary Tree is : {size}\n");
             }
         }
     }
-}
+
