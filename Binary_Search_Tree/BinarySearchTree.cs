@@ -54,6 +54,25 @@ namespace Binary_Search_Tree
             {
                 Console.Write($"\nThe Size of Binary Tree is : {size}\n");
             }
+        public Node<T> Find(T data, Node<T> parent)
+        {
+            if (parent != null)
+            {
+                if (data.Equals(parent.Data))
+                {
+                    return parent;
+                }
+                if (parent.Data.CompareTo(data) >= 0)
+                {
+                    return Find(data, parent.leftNode);
+                }
+                else
+                {
+                    return Find(data, parent.rightNode);
+                }
+            }
+            return null;
         }
+    }
     }
 
