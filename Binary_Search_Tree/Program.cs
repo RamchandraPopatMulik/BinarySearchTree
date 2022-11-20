@@ -8,7 +8,7 @@
             tree.Add(30);
             tree.Add(70);
 
-            Console.WriteLine("********************** Elements in Binary Trees **********************");
+            Console.WriteLine(" Elements in Binary Trees ");
             tree.Display(); 
         }
     }
